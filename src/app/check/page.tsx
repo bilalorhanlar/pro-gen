@@ -77,7 +77,7 @@ export default function CheckPage() {
                 </div>
                 <h2 className="text-xl sm:text-2xl font-semibold mb-2">Güvenlik Kodu Doğrulama</h2>
                 <p className="text-foreground/80 text-sm">
-                  Ürün üzerindeki 8 karakterlik güvenlik kodunu girin
+                  Ürün üzerindeki güvenlik kodunu girin
                 </p>
               </div>
 
@@ -89,14 +89,14 @@ export default function CheckPage() {
                   <input
                     type="text"
                     value={code}
-                    onChange={(e) => setCode(e.target.value.toUpperCase())}
+                    onChange={(e) => setCode(e.target.value)}
                     className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-white/50 backdrop-blur focus:ring-2 focus:ring-[#FF581F]/20 focus:border-[#FF581F] transition-colors text-center text-lg font-mono tracking-widest"
-                    placeholder="Örn: CMRMNSZ"
-                    maxLength={8}
+                    placeholder="Örn: cMrLnMz"
+                    maxLength={10}
                     required
                   />
                   <p className="mt-2 text-xs text-foreground/60 text-center">
-                    Kod büyük/küçük harf duyarlı değildir
+                    Kod büyük/küçük harf duyarlıdır
                   </p>
                 </div>
 
