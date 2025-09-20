@@ -1,11 +1,6 @@
-import { NextRequest, NextResponse } from 'next/server';
-import fs from 'fs';
-import path from 'path';
-import { createHash } from 'crypto';
-
-// Hash'li doğrulama sistemi - kodlar güvenli şekilde saklanıyor
-const VALID_HASHES = [
-  "66b3b3ebde5785201bd897bcfc711474b66f09c5b70721c252c10f221a40ebef",
+{
+  "hashes": [
+    "66b3b3ebde5785201bd897bcfc711474b66f09c5b70721c252c10f221a40ebef",
     "784e854823a9edad7c3b68718e01029eea7c50963613c92babfd14a0accbdf2e",
     "2e870667bac413178c43d493c97b0b05f49b79c510422ae3b4d220d00bcbb0a6",
     "456fc1843589d4a6826bba384fa6af2026eb766efdffafe046b8b994cc8d9a27",
@@ -2005,50 +2000,5 @@ const VALID_HASHES = [
     "eda9a460e701d89699e6c9aef9c1f82c30237a93f3b29aa5b2f011fea8f9f752",
     "804902bb1bdd8d54e45ee43a06d72016d28a3c72713a9edd5bee419c28fc9a87",
     "1a05cdac1a89c448d22e2f24864ae846c87fb529b5f7d6787f4cd7967146a332"
-];
-
-export async function POST(request: NextRequest) {
-  try {
-    const { code } = await request.json();
-
-    if (!code || typeof code !== 'string') {
-      return NextResponse.json({
-        isValid: false,
-        message: 'Geçerli bir kod giriniz.'
-      });
-    }
-
-    // Normalize code (trim and uppercase)
-    const normalizedCode = code.trim().toUpperCase();
-
-    // Hash doğrulama fonksiyonu
-    function verifyCode(input: string): boolean {
-      const hash = createHash("sha256").update(input).digest("hex");
-      return VALID_HASHES.includes(hash);
-    }
-
-    // Kodu hash ile doğrula
-    const isValidCode = verifyCode(normalizedCode);
-
-    if (!isValidCode) {
-      return NextResponse.json({
-        isValid: false,
-        message: 'Bu kod sistemimizde kayıtlı değil. Lütfen kodu kontrol edin.'
-      });
-    }
-
-    return NextResponse.json({
-      isValid: true,
-      message: 'Ürününüz orijinaldir! Bu kod başarıyla doğrulandı.',
-      code: normalizedCode,
-      usedAt: new Date().toISOString()
-    });
-
-  } catch (error) {
-    console.error('Code check error:', error);
-    return NextResponse.json({
-      isValid: false,
-      message: 'Bir hata oluştu. Lütfen tekrar deneyin.'
-    });
-  }
+  ]
 }
