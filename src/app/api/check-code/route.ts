@@ -64,12 +64,13 @@ export async function POST(request: NextRequest) {
         // Normalize code (sadece trim, büyük/küçük harf korunuyor)
         const normalizedCode = code.trim();
 
-        // Hash doğrulama fonksiyonu
+        // Hash doğrulama fonksiyonu (Salt ile güvenlik)
         function verifyCode(input: string): boolean {
-          const hash = createHash("sha256").update(input).digest("hex");
+          const salt = process.env.HASH_SALT || 'ProGen2025SecretSalt';
+          const saltedInput = input + salt;
+          const hash = createHash("sha256").update(saltedInput).digest("hex");
           return VALID_HASHES.includes(hash);
         }
-
         // Kodu hash ile doğrula
         const isValidCode = verifyCode(normalizedCode);
 
